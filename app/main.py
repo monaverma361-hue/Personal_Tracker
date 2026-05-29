@@ -32,39 +32,55 @@ tab1, tab2, tab3 = st.tabs([
 
 with tab1:
     st.subheader("💰 Add Expenses")
-    col1, col2 = st.columns(2)
 
-    with col1:
-        grocery = st.number_input("Grocery", min_value=0.0, step=1.0)
+    with st.form("expense_form", clear_on_submit=True):
+        col1, col2 = st.columns(2)
 
-        dairy = st.number_input("Dairy", min_value=0.0, step=1.0)
+        with col1:
 
-        laundry = st.number_input("Laundry", min_value=0.0, step=1.0) 
+            grocery = st.number_input("Grocery", min_value=0.0, step=1.0)
 
-        payment_mode = st.text_input("Enter payment method")
+            dairy = st.number_input("Dairy", min_value=0.0, step=1.0)
 
+            laundry = st.number_input("Laundry", min_value=0.0, step=1.0) 
 
-    with col2:
-        shopping = st.number_input("Shopping", min_value=0.0, step=1.0)
+            payment_mode = st.text_input("Enter payment method")
 
-        fruit_vegetable = st.number_input("Fruit and Vegetable", min_value=0.0, step=1.0)
+        with col2:
 
-        other_bills = st.number_input("Other Bills", min_value=0.0, step=1.0)
+            shopping = st.number_input("Shopping", min_value=0.0, step=1.0)
 
-        date = st.date_input("Date")
+            fruit_vegetable = st.number_input("Fruit and Vegetable", min_value=0.0, step=1.0)
 
-    if st.button("Enter"):
-        expense.insert_expense(
-            grocery,
-            dairy,
-            laundry,
-            payment_mode,
-            shopping,
-            fruit_vegetable,
-            other_bills,
-            date,
-        )
-        st.success("Expense saved successfully.")
+            other_bills = st.number_input("Other Bills", min_value=0.0, step=1.0)
+
+            date = st.date_input("Date")
+
+        submitted = st.form_submit_button("Enter")
+
+        if submitted:
+
+            expense.insert_expense(
+
+                grocery,
+
+                dairy,
+
+                laundry,
+
+                payment_mode,
+
+                shopping,
+
+                fruit_vegetable,
+
+                other_bills,
+
+                date,
+
+            )
+
+            st.success("Expense saved successfully.")
 
         
 
