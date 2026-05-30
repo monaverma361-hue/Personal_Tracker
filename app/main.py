@@ -85,3 +85,35 @@ with tab1:
         
 
     
+with tab2:
+    st.subheader("📋 Expense History")
+    st.info("📌 Showing the latest 10 expense transactions.")
+    data = expense.get_all_expenses()
+
+    import pandas as pd
+
+    df = pd.DataFrame(
+
+    data,
+
+    columns=[
+    "id",
+    "grocery",
+    "dairy",
+    "laundry",
+    "payment_mode",
+    "shopping",
+    "fruit_vegetable",
+    "other_bills",
+    "date"
+]
+
+)
+
+    st.dataframe(
+        df,
+        use_container_width=True,
+        hide_index=True)
+                 
+                 
+

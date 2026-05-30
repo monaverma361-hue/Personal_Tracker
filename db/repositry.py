@@ -4,7 +4,7 @@ from db.database import get_connection
 class ExpenseRepository:
 
 
-    
+
     def insert_expense(
         self,
         grocery,
@@ -34,7 +34,7 @@ class ExpenseRepository:
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                grocery,
+                grocery,                     
                 dairy,
                 laundry,
                 payment_mode,
@@ -47,3 +47,25 @@ class ExpenseRepository:
 
         conn.commit()
         conn.close()
+
+    def get_all_expenses(self):
+
+        conn = get_connection()
+
+        cursor = conn.cursor()
+
+        cursor.execute("""
+
+            SELECT * FROM expenses
+
+            ORDER BY id DESC
+
+            LIMIT 10
+
+        """)
+
+        data = cursor.fetchall()
+
+        conn.close()
+
+        return data
