@@ -127,12 +127,18 @@ with tab2:
     end_date = st.date_input("To date")
 
     if st.button("Show Expenses"):
+        st.session_state["filtered_expenses"] = expense.get_expenses_by_date_range(
+            start_date,
+            end_date,
+        )
+        st.session_state["selected_start_date"] = start_date
+        st.session_state["selected_end_date"] = end_date
 
-        data = expense.get_expenses_by_date_range(start_date, end_date)
+    if "filtered_expenses" in st.session_state:
 
         df = pd.DataFrame(
 
-            data,
+            st.session_state["filtered_expenses"],
 
             columns=[
 
@@ -150,15 +156,17 @@ with tab2:
 
         )
 
-        df = df.drop(columns=["id"])
-
         with st.container(border=True):
 
-            st.info(f"📌 Showing expenses from {start_date} to {end_date}")
+            st.info(
+                f"📌 Showing expenses from "
+                f"{st.session_state['selected_start_date']} "
+                f"to {st.session_state['selected_end_date']}"
+            )
 
             st.dataframe(
 
-                df,
+                df.drop(columns=["id"]),
 
                 use_container_width=True,
 
@@ -166,3 +174,31 @@ with tab2:
 
             )
 
+            if st.button("Show Total Summary"):
+
+                totals = expense.get_total_expenses_by_date_range(
+                    st.session_state["selected_start_date"],
+                    st.session_state["selected_end_date"],
+                )
+
+                summary_df = pd.DataFrame(
+                    {
+                        "category": [
+                            "grocery",
+                            "dairy",
+                            "laundry",
+                            "shopping",
+                            "fruit_vegetable",
+                            "other_bills",
+                        ],
+                        "total_amount": [
+                            value if value is not None else 0 for value in totals
+                        ],
+                    }
+                )
+
+                st.dataframe(
+                    summary_df,
+                    use_container_width=True,
+                    hide_index=True,
+                )
