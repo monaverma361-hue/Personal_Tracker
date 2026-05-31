@@ -1,6 +1,10 @@
+from trace import Trace
+
 import streamlit as st
 import sys
 import os
+
+from test.test_typing import dataclass_transform
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(BASE_DIR)
@@ -9,10 +13,12 @@ from db import repositry
 from db.database import init_db
 from core.expenses import ExpenseManager
 from db.repositry import InsertExpenses
+from core.managedata import DataManagment
 
 init_db()
 expense = ExpenseManager()
 expense_service = InsertExpenses()
+datamanagment = DataManagment()
 
 
 st.set_page_config(
@@ -202,3 +208,49 @@ with tab2:
                     use_container_width=True,
                     hide_index=True,
                 )
+
+with tab3:
+
+    st.subheader("⚙️ Manage Data")
+
+    st.info(
+
+        "Use this section to export, backup, or delete your expense records."
+
+    )
+
+    st.divider()
+    st.write("Export All Expenses")
+
+    data = datamanagment.get_all_expenses_for_export()
+    
+    import pandas as pd
+
+    df = pd.DataFrame(
+        data,
+        columns=[
+            "id",
+            "grocery",
+            "dairy",
+            "laundry",
+            "payment_mode",
+            "shopping",
+            "fruit_vegetable",
+            "other_bills",
+            "date"
+        ]
+    )
+
+    csv = df.drop(columns=["id"]).to_csv(index=False).encode("utf-8")
+
+    st.download_button(
+
+        "Download All Expenses",
+
+        data=csv,
+
+        file_name="all_expenses.csv",
+
+        mime="text/csv"
+
+    )
