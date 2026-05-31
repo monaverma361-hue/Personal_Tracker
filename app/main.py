@@ -5,11 +5,14 @@ import os
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(BASE_DIR)
 
+from db import repositry
 from db.database import init_db
-from db.repositry import ExpenseRepository
+from core.expenses import ExpenseManager
+from db.repositry import InsertExpenses
 
 init_db()
-expense = ExpenseRepository()
+expense = ExpenseManager()
+expense_service = InsertExpenses()
 
 
 st.set_page_config(
@@ -60,7 +63,7 @@ with tab1:
 
         if submitted:
 
-            expense.insert_expense(
+            expense_service.insert_expense(
 
                 grocery,
 
@@ -87,33 +90,79 @@ with tab1:
     
 with tab2:
     st.subheader("📋 Expense History")
-    st.info("📌 Showing the latest 10 expense transactions.")
-    data = expense.get_all_expenses()
+    with st.container(border=True):
+        st.info("📌 Showing the latest 10 expense transactions.")
+        data = expense.get_last10_expenses()
 
-    import pandas as pd
+        import pandas as pd
 
-    df = pd.DataFrame(
+        df = pd.DataFrame(
 
-    data,
+        data,
 
-    columns=[
-    "id",
-    "grocery",
-    "dairy",
-    "laundry",
-    "payment_mode",
-    "shopping",
-    "fruit_vegetable",
-    "other_bills",
-    "date"
-]
+        columns=[
+        "id",
+        "grocery",
+        "dairy",
+        "laundry",
+        "payment_mode",
+        "shopping",
+        "fruit_vegetable",
+        "other_bills",
+        "date"
+    ]
 
-)
+    )
 
-    st.dataframe(
-        df,
-        use_container_width=True,
-        hide_index=True)
+        st.dataframe(
+            df.drop(columns=["id"]),
+            use_container_width=True,
+            hide_index=True)
                  
-                 
+    st.divider()
+    st.subheader("📋 Expense History By Date")
+
+    start_date = st.date_input("From date")
+
+    end_date = st.date_input("To date")
+
+    if st.button("Show Expenses"):
+
+        data = expense.get_expenses_by_date_range(start_date, end_date)
+
+        df = pd.DataFrame(
+
+            data,
+
+            columns=[
+
+                "id",
+                "grocery",
+                "dairy",
+                "laundry",
+                "payment_mode",
+                "shopping",
+                "fruit_vegetable",
+                "other_bills",
+                "date"
+
+            ]
+
+        )
+
+        df = df.drop(columns=["id"])
+
+        with st.container(border=True):
+
+            st.info(f"📌 Showing expenses from {start_date} to {end_date}")
+
+            st.dataframe(
+
+                df,
+
+                use_container_width=True,
+
+                hide_index=True
+
+            )
 
