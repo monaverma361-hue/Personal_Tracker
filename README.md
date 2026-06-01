@@ -1,34 +1,32 @@
 # Personal Expense Manager
 
-A beginner-friendly expense tracking web app built with Streamlit and SQLite. This project helps users record daily expenses, review recent transactions, filter expenses by date range, generate summary totals, export CSV files, and delete records when needed.
+Personal Expense Manager is a beginner-friendly Streamlit web application for tracking daily expenses with a local SQLite database. It allows users to add new expense records, review recent transactions, filter expenses by date range, generate total summaries by category, export records to CSV, and delete data safely with confirmation steps.
+
+## Project Description
+
+This project is designed as a simple personal finance tracker and a portfolio-ready Python application. It combines a clean Streamlit user interface with SQLite for local data storage, making it easy to run without any external database setup.
 
 ## Features
 
-- Add expense entries through a simple Streamlit form
+- Add expense records using a simple form
+- Track categories such as grocery, dairy, laundry, shopping, fruit and vegetable, and other bills
+- Save payment mode and date for each expense
 - Store expense data in a local SQLite database
-- View the latest 10 transactions
+- View the latest 10 expense transactions
 - Filter expense history by date range
 - Show category-wise total expense summary for a selected date range
 - Export all expenses to CSV
 - Export filtered expenses by date range to CSV
-- Delete expenses by date range with confirmation
-- Delete all expenses with confirmation
+- Delete expenses by date range using a confirmation flow
+- Delete all expense records using a confirmation flow
 
 ## Screenshots
 
-Add screenshots after pushing the project to GitHub.
+![Add Expense](screenshots/home_page.png)
 
-- `assets/home-page.png`
-- `assets/expense-history.png`
-- `assets/manage-data.png`
+![Expense History](screenshots/expense_history.png)
 
-Example Markdown you can use later:
-
-```md
-![Home Page](assets/home-page.png)
-![Expense History](assets/expense-history.png)
-![Manage Data](assets/manage-data.png)
-```
+![Manage Data](screenshots/manage_data.png)
 
 ## Project Structure
 
@@ -44,6 +42,10 @@ Personal_Tracker/
 ├── db/
 │   ├── database.py
 │   └── repositry.py
+├── screenshots/
+│   ├── expense_history.png
+│   ├── home_page.png
+│   └── manage_data.png
 ├── requirements.txt
 ├── README.md
 └── .gitignore
@@ -51,7 +53,7 @@ Personal_Tracker/
 
 ## Technologies Used
 
-- Python 3.13
+- Python 3.13.7
 - Streamlit
 - Pandas
 - SQLite
@@ -61,7 +63,7 @@ Personal_Tracker/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/YOUR-GITHUB-USERNAME/personal-expense-manager.git
 cd Personal_Tracker
 ```
 
@@ -99,7 +101,7 @@ On Windows Command Prompt:
 .venv\Scripts\activate
 ```
 
-### 4. Install dependencies
+### 4. Install requirements
 
 ```bash
 pip install -r requirements.txt
@@ -107,13 +109,13 @@ pip install -r requirements.txt
 
 ## Run the Application
 
-From the project root, run:
+Run the Streamlit app from the project root:
 
 ```bash
 streamlit run app/main.py
 ```
 
-After running the command, Streamlit will open a local URL in your browser, usually:
+After starting, Streamlit will usually open in your browser at:
 
 ```text
 http://localhost:8501
@@ -121,42 +123,37 @@ http://localhost:8501
 
 ## Example Workflow
 
-1. Open the app in your browser.
+1. Open the application in your browser.
 2. Go to the `Add Expense` tab.
 3. Enter values for grocery, dairy, laundry, shopping, fruit and vegetable, other bills, payment mode, and date.
 4. Click `Enter` to save the expense.
-5. Go to the `View Expenses` tab to see recent transactions.
-6. Select a date range to filter expense history.
-7. Click `Show Total Summary` to view category-wise totals.
-8. Go to the `Manage Data` tab to export or delete records.
+5. Open the `View Expenses` tab to see the latest 10 transactions.
+6. Select a date range and click `Show Expenses` to view filtered records.
+7. Click `Show Total Summary` to see category-wise totals for that selected date range.
+8. Open the `Manage Data` tab to export all records, export filtered records, delete records by date range, or delete all records.
 
 ## Database Notes
 
-- The project uses SQLite, so no separate database server is required.
-- The database file is created locally inside the `data/` folder.
-- Expense records are stored in the `expenses` table.
+- This project uses **SQLite** as a local database.
+- The database file is stored in the `data/` folder as `document.db`.
+- The app initializes the `expenses` table automatically if it does not already exist.
+- No separate database server is required to run this project.
 
 ## Future Improvements
 
-- Add charts and expense analytics dashboard
-- Add category validation and better form input controls
-- Add monthly and yearly reports
-- Add edit/update functionality for saved expenses
-- Add user authentication for multi-user support
-- Add cloud deployment configuration
+- Add an analytics dashboard
+- Add charts and visual summaries
+- Add monthly reports
+- Add edit and update functionality
+- Add user authentication
+- Add cloud deployment support
 
 ## Author
 
 **Mona Verma**
 
-If you are using this project as a portfolio project, you can also add:
-
-- GitHub profile link
-- LinkedIn profile link
-- Portfolio website link
+GitHub: https://github.com/YOUR-GITHUB-USERNAME
 
 ## Python Version
 
 This project was developed with **Python 3.13.7**.
-
-It is a good idea to mention the Python version in this `README.md`. You do not need to put the Python version inside `requirements.txt`.
