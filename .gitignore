@@ -6,6 +6,7 @@ ENV/
 
 # Python cache and compiled files
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
 
@@ -20,6 +21,8 @@ __pycache__/
 .vscode/
 
 # SQLite database files
+data/document.db
+*.db
 data/*.db
 *.sqlite3
 *.sqlite
