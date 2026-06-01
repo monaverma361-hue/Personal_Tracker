@@ -219,8 +219,8 @@ with tab3:
 
     )
 
+    st.subheader("📤 Export All Expenses")
     st.divider()
-    st.write("Export All Expenses")
 
     data = datamanagment.get_all_expenses_for_export()
     
@@ -255,8 +255,8 @@ with tab3:
 
     )
 
+    st.subheader("📅 Export Expenses By Date Range")
     st.divider()
-    st.write("Export Filtered Expenses")
 
     export_start_date = st.date_input("From date", key="export_start_date")
     export_end_date = st.date_input("To date", key="export_end_date")
@@ -295,8 +295,8 @@ with tab3:
             mime="text/csv"
         )
 
+    st.subheader("🗑️ Delete Expenses By Date Range")
     st.divider()
-    st.write("Delete Expenses By Date Range")
 
     delete_start_date = st.date_input("Delete from date", key="delete_start_date")
     delete_end_date = st.date_input("Delete to date", key="delete_end_date")
@@ -319,8 +319,8 @@ with tab3:
             st.session_state["pending_delete_confirmation"] = False
             st.success("Expenses deleted successfully from selected date range.")
 
+    st.subheader("⚠️ Delete All Expenses")
     st.divider()
-    st.write("Delete All Expenses")
 
     if st.button("Delete All Expenses"):
         st.session_state["pending_delete_all_confirmation"] = True
