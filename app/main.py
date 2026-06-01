@@ -254,3 +254,82 @@ with tab3:
         mime="text/csv"
 
     )
+
+    st.divider()
+    st.write("Export Filtered Expenses")
+
+    export_start_date = st.date_input("From date", key="export_start_date")
+    export_end_date = st.date_input("To date", key="export_end_date")
+
+    if st.button("Generate Filtered CSV"):
+        filtered_data = expense.get_expenses_by_date_range(
+            export_start_date,
+            export_end_date,
+        )
+
+        filtered_df = pd.DataFrame(
+            filtered_data,
+            columns=[
+                "id",
+                "grocery",
+                "dairy",
+                "laundry",
+                "payment_mode",
+                "shopping",
+                "fruit_vegetable",
+                "other_bills",
+                "date"
+            ]
+        )
+
+        filtered_csv = filtered_df.drop(columns=["id"]).to_csv(
+            index=False
+        ).encode("utf-8")
+
+        st.download_button(
+            "Download Filtered Expenses",
+            data=filtered_csv,
+            file_name=(
+                f"expenses_{export_start_date}_to_{export_end_date}.csv"
+            ),
+            mime="text/csv"
+        )
+
+    st.divider()
+    st.write("Delete Expenses By Date Range")
+
+    delete_start_date = st.date_input("Delete from date", key="delete_start_date")
+    delete_end_date = st.date_input("Delete to date", key="delete_end_date")
+
+    if st.button("Delete Expenses"):
+        st.session_state["pending_delete_confirmation"] = True
+        st.session_state["pending_delete_start_date"] = delete_start_date
+        st.session_state["pending_delete_end_date"] = delete_end_date
+
+    if st.session_state.get("pending_delete_confirmation"):
+        st.warning(
+            "All expenses within the selected date range will be permanently removed."
+        )
+
+        if st.button("Confirm Delete"):
+            datamanagment.delete_expenses_by_date_range(
+                st.session_state["pending_delete_start_date"],
+                st.session_state["pending_delete_end_date"],
+            )
+            st.session_state["pending_delete_confirmation"] = False
+            st.success("Expenses deleted successfully from selected date range.")
+
+    st.divider()
+    st.write("Delete All Expenses")
+
+    if st.button("Delete All Expenses"):
+        st.session_state["pending_delete_all_confirmation"] = True
+
+    if st.session_state.get("pending_delete_all_confirmation"):
+        st.warning("All expense records will be permanently deleted.")
+
+        if st.button("Confirm Delete All"):
+            datamanagment.delete_all_expenses()
+            st.session_state["pending_delete_all_confirmation"] = False
+            st.success("All expenses deleted successfully.")
+        
