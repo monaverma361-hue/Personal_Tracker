@@ -152,7 +152,7 @@ http://localhost:8501
 
 **Mona Verma**
 
-GitHub: https://github.com/YOUR-GITHUB-USERNAME
+GitHub: https://github.com/monaverma361-hue/Personal_Tracker
 
 ## Python Version
 
